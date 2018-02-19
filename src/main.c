@@ -27,9 +27,13 @@ int		str_is_digit(char *line)
 
 void	ft_exit(char **tab, t_env *env, t_room **list)
 {
-	free_tab(tab);
-	free_list(list);
-	free_env(env);
+	if (all_is_set(env)) //// GERER SI TOUT EST SET TU INCREMENETE LA VARIABLE SET ET TU SORS SANS QUITTER
+	{
+		free_tab(tab);
+		free_list(list);
+		free_env(env);
+		return ;
+	}
 	write(2, "ERROR\n", 6);
 	exit(1);
 }
@@ -90,7 +94,7 @@ int		main(void)
 	free(line);
 	if (env)
 	{
-		while (get_next_line(0, &line) > 0)
+		while (get_next_line(0, &line) > 0 && env->wrong_but_set == 0)
 			list_parse_init(env, line);
 	}
 	return (0);

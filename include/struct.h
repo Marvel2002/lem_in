@@ -24,6 +24,7 @@ typedef	struct  s_room
 typedef struct 	s_env
 {
 	int	ant_max;
+	int	wrong_but_set;
 	t_room **list;
 }				t_env;
 
