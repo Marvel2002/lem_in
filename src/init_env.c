@@ -76,5 +76,4 @@ void	parsing_loop(t_env *env)
 		else
 			tube_init(line, env);
 	}
-
 }
