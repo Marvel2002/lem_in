@@ -104,16 +104,19 @@ int		analyse_and_parse_tube(char *line_buf, t_env *env) // ON EN EST LA <<<<< CH
 	return (1);
 }
 
-void	display_list(t_env *env)
+int		count_list(t_env *env)
 {
 	t_room *tmp;
+	int i;
 
 	tmp = env->room;
+	i = 0;
 	while (tmp)
 	{
-		ft_putendl(tmp->name);
+		i++;
 		tmp = tmp->next;
 	}
+	return (i);
 }
 
 int		parsing_loop(t_env *env)
@@ -131,18 +134,21 @@ int		parsing_loop(t_env *env)
 		else
 			return (0);
 		free(line_buf);
-		ft_putendl("la liste est =");
-		display_list(env);
 	}
-/*	analyse_and_parse_tube(line_buf, env);
-	while (get_next_line(0, &line_buf) > 0 && analyse_and_parse_tube(line_buf, env))
+	ft_putendl("entree");
+	if (count_list(env) > 1 && analyse_and_parse_tube(line_buf, env)) // SOUCIS ICI
 	{
-		line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
-		if (line_list)
-			fill_node_list(env, line_list, line_buf);
-		else
-			return (0);
+		ft_putendl("entree");
 		free(line_buf);
-	}*/
+		while (get_next_line(0, &line_buf) > 0 && analyse_and_parse_tube(line_buf, env))
+		{
+			line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
+			if (line_list)
+				fill_node_list(env, line_list, line_buf);
+			else
+				return (0);
+			free(line_buf);
+		}
+	}
 	return (0);
 }
