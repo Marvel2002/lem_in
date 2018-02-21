@@ -30,10 +30,11 @@ void	set_start_end(char **tab, t_env *env)
 		env->next_room_is_start = 1;
 	else if (ft_strcmp(tab[0], "##end") == 0 && env->isset->end_is_set == 0)
 		env->next_room_is_end = 1;
-	return ;
 }
 
-void	list_parse_init(char *line, t_env *env)
+//int		next_step()
+
+void	room_init(char *line, t_env *env)
 {
 	char **tab;
 
@@ -43,7 +44,9 @@ void	list_parse_init(char *line, t_env *env)
 	else if (tab_len(tab) == 3 && tab_is_valid_three(tab))
 		add_node(tab, env);
 	else
-		ft_exit(env);
-	//free_tab(tab);
-	free(line);
+	{
+		//free_tab(tab);
+		tube_init(line, env);
+	}
+	//free(line);
 }

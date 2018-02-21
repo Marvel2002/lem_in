@@ -14,11 +14,11 @@ int		all_is_set(t_env *env)
 {
 	if (!env->isset->room_is_set)
 		return (1);
-	else if	(!env->isset->tube_is_set)
+	else if	(!env->isset->start_is_set)
 		return (2);
-	else if (!env->isset->start_is_set)
+	else if (!env->isset->end_is_set)
 		return (3);
-	else if	(!env->isset->end_is_set)
+	else if	(!env->isset->start_is_set)
 		return (4);
 	return (0);
 }
@@ -30,7 +30,7 @@ void	display_exit(int exit)
 	else if (exit == 2)
 		ft_putendl("Start room is not set, exiting");
 	else if (exit == 3)
-		ft_putendl("Exit room is not set, exiting");
+		ft_putendl("End room is not set, exiting");
 	else if (exit == 4)
 		ft_putendl("No tubes found, exiting");
 }
@@ -39,6 +39,7 @@ void	ft_exit(t_env *env)
 {
 	int exit_num;
 
+	exit_num = 0;
 	if ((exit_num = all_is_set(env)) > 0)
 	{
 		display_exit(exit_num);
