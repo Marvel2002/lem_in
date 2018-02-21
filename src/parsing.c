@@ -34,7 +34,7 @@ void	set_start_end(char **tab, t_env *env)
 
 //int		next_step()
 
-void	room_init(char *line, t_env *env)
+/*void	room_init(char *line, t_env *env)
 {
 	char **tab;
 
@@ -49,4 +49,4 @@ void	room_init(char *line, t_env *env)
 		tube_init(line, env);
 	}
 	//free(line);
-}
+}*/

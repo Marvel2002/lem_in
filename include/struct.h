@@ -11,10 +11,6 @@ typedef struct 	s_isset
 	int		end_is_set;
 }				t_isset;
 
-typedef struct 	s_link
-{
-	struct s_room *link_to;
-}				t_link;
 
 typedef	struct  s_room
 {
@@ -24,8 +20,14 @@ typedef	struct  s_room
 	int start;
 	int end;
 	struct s_room *next;
-	t_link *link;
 }				t_room;
+
+typedef struct 	s_stdin
+{
+	char *line;
+	char c;
+	struct s_stdin *next;
+}				t_stdin;
 
 typedef struct 	s_env
 {
@@ -33,6 +35,7 @@ typedef struct 	s_env
 	int	wrong_but_set;
 	int	next_room_is_start;
 	int	next_room_is_end;
+	t_stdin *stdin_list;
 	t_room *room;
 	t_isset *isset;
 }				t_env;
@@ -43,9 +46,9 @@ int		tab_is_valid_three(char **tab);
 void	set_start_end(char **tab, t_env *env);
 t_env 	*init_env_ant(char *line);
 t_env	*init_env(t_env *env);
-void	parsing_loop(t_env *env);
+int		parsing_loop(t_env *env);
 void	add_node(char **tab, t_env *env);
-void	room_init(char *line, t_env *env);
+char	**room_init(char *line);
 void	tube_init(char *line, t_env *env);
 int		all_is_set(t_env *env);
 void	display_exit(int exit);

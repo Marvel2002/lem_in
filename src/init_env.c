@@ -1,30 +1,5 @@
 #include "struct.h"
-
-t_env 	*init_env_ant(char *line)
-{
-	t_env *env;
- 
-	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
-		return (NULL);
-	if (!(env->isset = (t_isset *)ft_memalloc(sizeof(t_isset))))
-		return (NULL);
-	env->ant_max = ft_atoi(line);
-	ft_putstr("ant_max est OK\n"); 
-	return (env);
-}
-
-t_env	*init_env(t_env *env)
-{
-	char *line;
-
-	line = NULL;
-	get_next_line(0, &line);
-	if (str_is_digit(line) && ft_atoi(line) > 0)
-		env = init_env_ant(line);
-	free(line);
-	return (env);
-}
-
+/*
 int 	tab_match(char **tab, t_env *env)
 {
 	int match_1;
@@ -62,18 +37,87 @@ void	tube_init(char *line, t_env *env)
 	}
 	else
 		ft_exit(env);
+}*/
+
+void	fill_node_room(char **tab, t_env *env)
+{
+	t_room *room;
+
+	room = (t_room *)ft_memalloc(sizeof(t_room));
+	if (room)
+	{
+		room->name = ft_strdup(tab[0]);
+		room->x = ft_atoi(tab[1]);
+		room->y = ft_atoi(tab[2]);
+		if (env->room)
+			room->next = env->room;
+		else
+			room->next = NULL;
+		env->room = room;
+	}
 }
 
-void	parsing_loop(t_env *env)
+char		**room_init(char *line)
 {
-	char *line;
+	char **tab;
 
-	line = NULL;
-	while (get_next_line(0, &line) > 0 && env->wrong_but_set == 0)
+	tab = ft_strsplit(line, ' ');
+	if ((tab_len(tab) == 1 && tab[0][0] == '#') || (tab_len(tab) == 3 && tab_is_valid_three(tab)))
+		return (tab);
+	return (NULL);
+}
+
+void	fill_node_list(t_env *env, t_stdin *line_list, char *line_buf)
+{
+	line_list->line = ft_strdup(line_buf);
+	line_list->c = '\n';
+	if (env->stdin_list)
+		line_list->next = env->stdin_list;
+	else
+		line_list->next = NULL;
+	env->stdin_list = line_list;
+}
+
+int		analyse_and_parse(char *line_buf, t_env *env)
+{
+	char **tab;
+
+	tab = NULL;
+	if (!env->stdin_list && str_is_digit(line_buf))
 	{
-		if (!env->isset->tube_is_set)
-			room_init(line, env);
-		else
-			tube_init(line, env);
+		ft_putstr("lol");
+		env->ant_max = ft_atoi(line_buf);
+		ft_putendl("ant_max is set");
 	}
+	else if ((tab = room_init(line_buf)) && tab[0][0] == '#')
+		set_start_end(tab, env);
+	else if ((tab = room_init(line_buf)))
+		fill_node_room(tab, env);
+	else
+	{
+		ft_putstr("lol");
+		//free_tab(tab)
+		return (0);
+	}
+	//free_tab(tab);
+	return (1);
+}
+
+int		parsing_loop(t_env *env)
+{
+	char *line_buf;
+	t_stdin *line_list;
+
+	line_buf = NULL;
+	line_list = NULL;
+	while (get_next_line(0, &line_buf) > 0 && analyse_and_parse(line_buf, env))
+	{
+		line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
+		if (line_list)
+			fill_node_list(env, line_list, line_buf);
+		else
+			return (0);
+		free(line_buf);
+	}
+	return (0);
 }

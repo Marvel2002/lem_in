@@ -4,10 +4,8 @@ int		main(void)
 {
 	t_env *env;
 
-	env = NULL;
-	if ((env = init_env(env)))
-		parsing_loop(env);
-	else
-		write(2, "ERROR\n", 6);
+	env = (t_env *)malloc(sizeof(t_env));
+	while (parsing_loop(env))
+		;
 	return (0);
 }
