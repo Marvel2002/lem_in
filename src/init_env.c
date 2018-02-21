@@ -55,16 +55,7 @@ void	fill_node_room(char **tab, t_env *env)
 			room->next = NULL;
 		env->room = room;
 	}
-}
-
-char		**room_init(char *line)
-{
-	char **tab;
-
-	tab = ft_strsplit(line, ' ');
-	if ((tab_len(tab) == 1 && tab[0][0] == '#') || (tab_len(tab) == 3 && tab_is_valid_three(tab)))
-		return (tab);
-	return (NULL);
+	ft_putendl("room is created");
 }
 
 void	fill_node_list(t_env *env, t_stdin *line_list, char *line_buf)
@@ -78,29 +69,51 @@ void	fill_node_list(t_env *env, t_stdin *line_list, char *line_buf)
 	env->stdin_list = line_list;
 }
 
-int		analyse_and_parse(char *line_buf, t_env *env)
+int		analyse_and_parse_room(char *line_buf, t_env *env)
 {
 	char **tab;
 
-	tab = NULL;
+	tab = ft_strsplit(line_buf, ' ');
 	if (!env->stdin_list && str_is_digit(line_buf))
-	{
-		ft_putstr("lol");
 		env->ant_max = ft_atoi(line_buf);
-		ft_putendl("ant_max is set");
-	}
-	else if ((tab = room_init(line_buf)) && tab[0][0] == '#')
+	else if (tab_len(tab) == 1 && tab[0][0] == '#')
 		set_start_end(tab, env);
-	else if ((tab = room_init(line_buf)))
+	else if (tab_len(tab) == 3 && tab_is_valid_three(tab))
 		fill_node_room(tab, env);
 	else
 	{
-		ft_putstr("lol");
 		//free_tab(tab)
 		return (0);
 	}
 	//free_tab(tab);
 	return (1);
+}
+
+int		analyse_and_parse_tube(char *line_buf, t_env *env) // ON EN EST LA <<<<< CHERCHER SI DES SALLES MATCHS
+{
+	char **tab;
+
+	tab = ft_strsplit(line_buf, '-');
+	if (tab_len(tab) == 2)
+	{
+		ft_putstr("link\n");
+		env->isset->tube_is_set = 1;
+	}
+	else
+		return (0);
+	return (1);
+}
+
+void	display_list(t_env *env)
+{
+	t_room *tmp;
+
+	tmp = env->room;
+	while (tmp)
+	{
+		ft_putendl(tmp->name);
+		tmp = tmp->next;
+	}
 }
 
 int		parsing_loop(t_env *env)
@@ -110,7 +123,7 @@ int		parsing_loop(t_env *env)
 
 	line_buf = NULL;
 	line_list = NULL;
-	while (get_next_line(0, &line_buf) > 0 && analyse_and_parse(line_buf, env))
+	while (get_next_line(0, &line_buf) > 0 && analyse_and_parse_room(line_buf, env))
 	{
 		line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
 		if (line_list)
@@ -118,6 +131,18 @@ int		parsing_loop(t_env *env)
 		else
 			return (0);
 		free(line_buf);
+		ft_putendl("la liste est =");
+		display_list(env);
 	}
+/*	analyse_and_parse_tube(line_buf, env);
+	while (get_next_line(0, &line_buf) > 0 && analyse_and_parse_tube(line_buf, env))
+	{
+		line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
+		if (line_list)
+			fill_node_list(env, line_list, line_buf);
+		else
+			return (0);
+		free(line_buf);
+	}*/
 	return (0);
 }
