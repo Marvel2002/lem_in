@@ -25,7 +25,6 @@ typedef	struct  s_room
 typedef struct 	s_stdin
 {
 	char *line;
-	char c;
 	struct s_stdin *next;
 }				t_stdin;
 

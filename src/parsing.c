@@ -24,11 +24,11 @@ int		tab_is_valid_three(char **tab)
 	return (1);
 }
 
-void	set_start_end(char **tab, t_env *env)
+void	set_start_end(t_env *env)
 {
-	if (ft_strcmp(tab[0], "##start") == 0 && env->isset->start_is_set == 0)
+	if (ft_strcmp(env->stdin_list->line, "##start") == 0 && env->isset->start_is_set == 0)
 		env->next_room_is_start = 1;
-	else if (ft_strcmp(tab[0], "##end") == 0 && env->isset->end_is_set == 0)
+	else if (ft_strcmp(env->stdin_list->line, "##end") == 0 && env->isset->end_is_set == 0)
 		env->next_room_is_end = 1;
 }
 
