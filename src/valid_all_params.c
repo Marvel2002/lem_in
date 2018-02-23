@@ -22,13 +22,11 @@ void	set_start_end(t_env *env, t_room *room)
 	{
 		room->start = 1;
 		env->isset->start_is_set = 1;
-		ft_putendl("la salle est : START");
 	}
 	else if (env->next_room_is_end)
 	{
 		room->end = 1;
 		env->isset->end_is_set = 1;
-		ft_putendl("la salle est : END");
 	}
 	restart_start_end(env);
 }

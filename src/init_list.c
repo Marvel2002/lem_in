@@ -17,8 +17,77 @@ void	fill_node_room(char **tab, t_env *env)
 		env->room = room;
 		set_start_end(env, room);
 		restart_start_end(env);
-		ft_putendl("room is created");
+		if (!env->isset->room_is_set)
+			env->isset->room_is_set = 1;
 	}
+}
+
+
+t_room	*find_second_room(char **tab, t_env *env)
+{
+	t_room *tmp;
+
+	tmp = env->room;
+	while (ft_strcmp(tmp->name, tab[1]))
+		tmp = tmp->next;
+	return (tmp);
+}
+
+t_room	*find_first_room(char **tab, t_env *env)
+{
+	t_room *tmp;
+
+	tmp = env->room;
+	while (ft_strcmp(tmp->name, tab[0]))
+		tmp = tmp->next;
+	return (tmp);
+}
+
+void	add_tube_to_list(t_room *node, t_room *to_add)
+{
+	int i;
+	t_room **new_link;
+
+	i = 0;
+	new_link = (t_room **)ft_memalloc(sizeof(t_room *) * (node->num_link + 1));
+	if (new_link)
+	{
+		while (i < node->num_link)
+		{
+			new_link[i] = node->link[i];
+			i++;
+		}
+		new_link[i] = to_add;
+		node->link = new_link;
+		node->num_link++;
+	}
+}
+
+void	fill_node_tube(char **tab, t_env *env)
+{
+	t_room *first;
+	t_room *second;
+
+	first = find_first_room(tab, env);
+	second = find_second_room(tab, env);
+	if (!first->link)
+	{
+		first->link = (t_room **)ft_memalloc(sizeof(t_room *));
+		first->link[0] = second;
+		first->num_link++;
+	}
+	else
+		add_tube_to_list(first, second);
+	if (!second->link)
+	{
+		second->link = (t_room **)ft_memalloc(sizeof(t_room *));
+		second->link[0] = first;
+		second->num_link++;
+	}
+	else
+		add_tube_to_list(second, first);
+	if (!env->isset->tube_is_set)
+			env->isset->tube_is_set = 1;
 }
 
 int		analyse_and_init_tube(char *line_buf, t_env *env)
@@ -28,7 +97,7 @@ int		analyse_and_init_tube(char *line_buf, t_env *env)
 	tab = ft_strsplit(line_buf, '-');
 	if (tab_len(tab) == 2 && tab_is_valid_two(tab, env))
 	{
-		//fill_node_link
+		fill_node_tube(tab, env);
 		return (2);
 	}
 	return (0);
@@ -39,7 +108,7 @@ int		analyse_and_init_room(char *line_buf, t_env *env)
 	char **tab;
 
 	tab = ft_strsplit(line_buf, ' ');
-	if (tab_len(tab) == 3 && tab_is_valid_three(tab))
+	if (tab_len(tab) == 3 && tab_is_valid_three(tab, env))
 	{
 		//free_tab(tab);
 		fill_node_room(tab, env);

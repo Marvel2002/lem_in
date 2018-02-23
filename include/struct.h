@@ -21,6 +21,7 @@ typedef	struct  s_room
 	int end;
 	struct s_room *next;
 	struct s_room **link;
+	int	num_link;
 }				t_room;
 
 typedef struct 	s_stdin
@@ -47,7 +48,7 @@ int		analyse_and_init_room(char *line_buf, t_env *env);
 void	init_node_list(t_env *env, t_stdin *line_list, char *line_buf);
 void	create_node_list(t_env *env, char *line_buf);
 int 	tab_is_valid_two(char **tab, t_env *env);
-int		tab_is_valid_three(char **tab);
+int		tab_is_valid_three(char **tab, t_env *env);
 int		parsing_loop(t_env *env);
 int		tab_len(char **tab);
 int		str_is_digit(char *line);
@@ -57,5 +58,6 @@ void	restart_start_end(t_env *env);
 void	check_comment_start_end(t_env *env, t_stdin *line_list);
 void	set_start_end(t_env *env, t_room *room);
 int		all_is_set(t_env *env);
+int		no_match_list(char **tab, t_env *env);
 
 #endif

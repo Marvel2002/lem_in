@@ -9,6 +9,8 @@ int 	tab_is_valid_two(char **tab, t_env *env)
 	tmp = env->room;
 	match_1 = 0;
 	match_2 = 0;
+	if (ft_strcmp(tab[0], tab[1]) == 0 || !env->isset->start_is_set || !env->isset->end_is_set)
+		return (0);
 	while (tmp)
 	{
 		if (ft_strcmp(tab[0], tmp->name) == 0)
@@ -22,11 +24,27 @@ int 	tab_is_valid_two(char **tab, t_env *env)
 	return (0);
 }
 
-int		tab_is_valid_three(char **tab)
+int		no_match_list(char **tab, t_env *env)
+{
+	t_room *tmp;
+
+	tmp = env->room;
+	while (tmp)
+	{
+		if (ft_strcmp(tab[0], tmp->name) == 0 || (ft_atoi(tab[1]) == tmp->x && ft_atoi(tab[2]) == tmp->y))
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+int		tab_is_valid_three(char **tab, t_env *env)
 {
 	if (tab[0][0] == 'L' || tab[0][0] == '#')
 		return (0);
 	else if (!str_is_digit(tab[1]) || !str_is_digit(tab[2]))
+		return (0);
+	else if (!no_match_list(tab, env))
 		return (0);
 	return (1);
 }
