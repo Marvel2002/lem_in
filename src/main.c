@@ -4,8 +4,13 @@ int		main(void)
 {
 	t_env *env;
 
-	env = (t_env *)ft_memalloc(sizeof(t_env));
+	env = init_env();
 	while (parsing_loop(env))
 		;
+	if (all_is_set(env))
+		ft_putendl("ALL IS SET, READY FOR ALGO");
+	else
+		write(2, "ERROR\n", 6);
+	display_list(env);
 	return (0);
 }

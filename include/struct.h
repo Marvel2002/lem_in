@@ -20,6 +20,7 @@ typedef	struct  s_room
 	int start;
 	int end;
 	struct s_room *next;
+	struct s_room **link;
 }				t_room;
 
 typedef struct 	s_stdin
@@ -39,18 +40,22 @@ typedef struct 	s_env
 	t_isset *isset;
 }				t_env;
 
+t_env	*init_env(void);
+void	fill_node_room(char **tab, t_env *env);
+int		analyse_and_init_tube(char *line_buf, t_env *env);
+int		analyse_and_init_room(char *line_buf, t_env *env);
+void	init_node_list(t_env *env, t_stdin *line_list, char *line_buf);
+void	create_node_list(t_env *env, char *line_buf);
+int 	tab_is_valid_two(char **tab, t_env *env);
+int		tab_is_valid_three(char **tab);
+int		parsing_loop(t_env *env);
 int		tab_len(char **tab);
 int		str_is_digit(char *line);
-int		tab_is_valid_three(char **tab);
-void	set_start_end(char **tab, t_env *env);
-t_env 	*init_env_ant(char *line);
-t_env	*init_env(t_env *env);
-int		parsing_loop(t_env *env);
-void	add_node(char **tab, t_env *env);
-char	**room_init(char *line);
-void	tube_init(char *line, t_env *env);
+void	display_list(t_env *env);
+int		count_list(t_env *env);
+void	restart_start_end(t_env *env);
+void	check_comment_start_end(t_env *env, t_stdin *line_list);
+void	set_start_end(t_env *env, t_room *room);
 int		all_is_set(t_env *env);
-void	display_exit(int exit);
-void	ft_exit(t_env *env);
 
 #endif

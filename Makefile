@@ -2,7 +2,7 @@ NAME = lem_in
 CC = gcc
 INCLUDE = -Ilibft -Iinclude
 CFLAGS = -Wall -Werror -Wextra -fsanitize=address $(INCLUDE)
-SRC_PS = src/main.c src/parsing.c src/init_env.c src/init_list.c src/utils.c
+SRC_PS = src/main.c src/parsing.c src/init_env.c src/init_list.c src/utils.c src/valid_all_params.c
 LIB_PATH = ./libft/
 LIB_BIN = $(LIB_PATH)libft.a
 SRC_PATH = ./src/
