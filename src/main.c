@@ -5,8 +5,7 @@ int		main(void)
 	t_env *env;
 
 	env = init_env();
-	while (parsing_loop(env))
-		;
+	parsing_loop(env);
 	if (all_is_set(env))
 		ft_putendl("ALL IS SET, READY FOR ALGO");
 	else
