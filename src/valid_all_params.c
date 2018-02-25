@@ -33,7 +33,7 @@ void	set_start_end(t_env *env, t_room *room)
 
 int		all_is_set(t_env *env)
 {
-	if (env->isset->room_is_set && env->isset->start_is_set && env->isset->end_is_set && env->isset->start_is_set)
+	if (env->isset->room_is_set && env->isset->tube_is_set && env->isset->end_is_set && env->isset->start_is_set)
 		return (1);
 	return (0);
 }

@@ -12,24 +12,43 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
+void		ft_realloc(char **ptr, size_t size, char c)
+{
+	char		*newptr;
+
+	newptr = NULL;
+	if (*ptr)
+	{
+		newptr = (char *)malloc(sizeof(char) * (size + 2));
+		if (!newptr)
+			return ;
+		memcpy(newptr, *ptr, size);
+		free((void *)*ptr);
+		*ptr = newptr;
+		(*ptr)[size] = c;
+	}
+	else
+	{
+		*ptr = (char *)malloc(sizeof(char) * 2);
+		if (!ptr)
+			return ;
+		*ptr[size] = c;
+	}
+}
 
 int		main(void)
 {
-	char **tab;
-	int i;
+	char *str;
+	char **str2;
+	char ***str3;
 
-	i = 0;
-	tab = (char **)malloc(sizeof(*tab) * 2);
-	tab[0] = (char *)malloc(sizeof(char) * 2);
-	tab[0] = "salut";
-	tab[1] = "ca va?";
-	tab[2] = "oui merci";
-	tab[3] = "mdr";
-	tab[4] = 0;
-	while (tab[i])
-	{
-		printf("%s\n", tab[i]);
-		i++;
-	}
+	char c = 'a';
+
+	str = &c;
+	str2 = &str;
+	str3 = &str2;
+	ft_realloc(&str, 2, 'b');
 	return (0);
 }

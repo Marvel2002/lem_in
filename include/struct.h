@@ -17,6 +17,7 @@ typedef	struct  s_room
 	char *name;
 	int x;
 	int y;
+	int ant;
 	int start;
 	int end;
 	struct s_room *next;

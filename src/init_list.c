@@ -118,7 +118,7 @@ int		analyse_and_init_room(char *line_buf, t_env *env)
 		return (2);
 	//free_tab(tab);
 	
-	//free_tab(tab)
+	//free_tab(tab);
 	return (0);
 }
 

@@ -64,7 +64,7 @@ int		parsing_loop(t_env *env)
 	{
 		if (line_buf[0] == '#')
 			;
-		else if (mode == 0 && str_is_digit(line_buf) && ft_atoi(line_buf))
+		else if (mode == 0 && str_is_digit(line_buf) && ft_atoi(line_buf) > 0)
 		{
 			//init_ant(env, line_buf);
 			env->ant_max = ft_atoi(line_buf);
