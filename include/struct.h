@@ -20,6 +20,8 @@ typedef	struct  s_room
 	int ant;
 	int start;
 	int end;
+	int	path;
+	int	check;
 	struct s_room *next;
 	struct s_room **link;
 	int	num_link;
@@ -34,9 +36,9 @@ typedef struct 	s_stdin
 typedef struct 	s_env
 {
 	int	ant_max;
-	int	wrong_but_set;
 	int	next_room_is_start;
 	int	next_room_is_end;
+	int	end_is_found;
 	t_stdin *stdin_list;
 	t_room *room;
 	t_isset *isset;
