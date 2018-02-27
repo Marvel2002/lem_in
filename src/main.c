@@ -11,7 +11,7 @@ t_room	*find_start(t_env *env)
 	return (tmp);
 }
 
-t_room	*find_start(t_env *env)
+t_room	*find_end(t_env *env)
 {
 	t_room *tmp;
 
@@ -70,12 +70,18 @@ void	display_room(t_env *env)
 	}
 }
 
+void	display_solution(t_room *end)
+{
+
+}
+
 int		main(void)
 {
 	t_env *env;
 
 	env = init_env();
 	t_room *start;
+	t_room *end;
 	parsing_loop(env);
 	if (all_is_set(env))
 	{
@@ -84,7 +90,13 @@ int		main(void)
 		start = find_start(env);
 		end = find_end(env);
 		set_path(start, 1);
-		display_room(env);	
+		display_room(env);
+		if (end->path)
+		{
+			display_solution(end);
+		}	
+		else
+			ft_putendl("Aucun chemin ne mène à End");
 	}
 	else
 	{
