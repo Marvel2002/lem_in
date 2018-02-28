@@ -7,7 +7,6 @@ t_room	*find_start(t_env *env)
 	tmp = env->room;
 	while (!tmp->start)
 		tmp = tmp->next;
-	tmp->check = 1;
 	return (tmp);
 }
 
@@ -18,7 +17,6 @@ t_room	*find_end(t_env *env)
 	tmp = env->room;
 	while (!tmp->end)
 		tmp = tmp->next;
-	tmp->check = 1;
 	return (tmp);
 }
 
@@ -37,7 +35,9 @@ void	set_path(t_room *start, int path)
 	while (i < start->num_link)
 	{
 		start->check = 1;
-		if (!start->link[i]->check && start->link[i]->path == 0)
+		if (start->link[i]->end)
+			;
+		else if (!start->link[i]->check && start->link[i]->path == 0)
 		{
 			start->link[i]->path = path;
 			set_path(start->link[i], path + 1);
@@ -70,9 +70,67 @@ void	display_room(t_env *env)
 	}
 }
 
+int		min_path(t_room *end)
+{
+	int i;
+	int nb_min;
+
+	i = 0;
+	nb_min = end->link[i]->path;
+	while (i < end->num_link)
+	{
+		if (nb_min > end->link[i]->path)
+			nb_min = end->link[i]->path;
+		i++;
+	}
+	return (nb_min);
+}
+
+t_room	*go_to_next_min(t_room *end, int min)
+{
+	int i;
+
+	i = 0;
+	while (i < end->num_link)
+	{
+		if (end->link[i]->path == min)
+			return (end->link[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 void	display_solution(t_room *end)
 {
+	char *str;
+	int i;
+	int min;
 
+
+	str = ft_strdup(end->name);
+	i = 0;
+	min = min_path(end);
+	while (min > 0)
+	{
+		end = go_to_next_min(end, min);
+		ft_putendl(end->name);
+		str = ft_strjoin(str, end->name);
+		min--;
+	}
+}
+
+int		path_to_end(t_room *end)
+{
+	int i;
+
+	i = 0;
+	while (i < end->num_link)
+	{
+		if (end->link[i]->path)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int		main(void)
@@ -90,13 +148,13 @@ int		main(void)
 		start = find_start(env);
 		end = find_end(env);
 		set_path(start, 1);
-		display_room(env);
-		if (end->path)
+		if (path_to_end(end))
 		{
+			ft_putendl("Un chemin au moins existe!");
 			display_solution(end);
-		}	
+		}
 		else
-			ft_putendl("Aucun chemin ne mène à End");
+			ft_putendl("Aucun chemin ne mène start à end");
 	}
 	else
 	{
