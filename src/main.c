@@ -35,9 +35,7 @@ void	set_path(t_room *start, int path)
 	while (i < start->num_link)
 	{
 		start->check = 1;
-		if (start->link[i]->end)
-			;
-		else if (!start->link[i]->check && start->link[i]->path == 0)
+		if (!start->link[i]->check && start->link[i]->path == 0)
 		{
 			start->link[i]->path = path;
 			set_path(start->link[i], path + 1);
@@ -47,10 +45,6 @@ void	set_path(t_room *start, int path)
 			start->link[i]->path = path;
 			set_path(start->link[i], path + 1);
 		}
-		ft_putstr("On est dans la salle ");
-		ft_putendl(start->name);
-		ft_putstr("Et le path est ");
-		ft_putnbr_c(start->path, '\n');
 		i++;
 	}
 	/*ft_putstr("SORTIE DE ");
@@ -100,23 +94,44 @@ t_room	*go_to_next_min(t_room *end, int min)
 	return (NULL);
 }
 
-void	display_solution(t_room *end)
+int		ant_in_next(t_room *end)
 {
-	char *str;
-	int i;
+	if (end->ant)
+		return (1);
+	return (0);
+}
+
+void	move_ant(t_room *tmp, t_room *end)
+{
+	tmp->ant++;
+	end->ant--;
+}
+
+void	display_solution(t_room *end, t_env *env)
+{
 	int min;
+	t_room *end_final = end;
+	t_room *tmp;
 
-
-	str = ft_strdup(end->name);
-	i = 0;
 	min = min_path(end);
-	while (min > 0)
+	while (!end->start)
 	{
+		tmp = end;
 		end = go_to_next_min(end, min);
-		ft_putendl(end->name);
-		str = ft_strjoin(str, end->name);
+		if (ant_in_next(end))
+		{
+			move_ant(tmp, end);
+			if (tmp->ant && !tmp->start)
+			{
+				ft_putstr(tmp->name);
+				ft_putchar(' ');
+			}
+		}
 		min--;
 	}
+	ft_putchar('\n');
+	if (end_final->ant != env->ant_max)
+		display_solution(end_final, env);
 }
 
 int		path_to_end(t_room *end)
@@ -144,14 +159,14 @@ int		main(void)
 	if (all_is_set(env))
 	{
 		display_list(env);
-		ft_putendl("ALL IS SET, READY FOR ALGO");
 		start = find_start(env);
 		end = find_end(env);
 		set_path(start, 1);
 		if (path_to_end(end))
 		{
-			ft_putendl("Un chemin au moins existe!");
-			display_solution(end);
+			start->ant = env->ant_max;
+			ft_putchar('\n');
+			display_solution(end, env);
 		}
 		else
 			ft_putendl("Aucun chemin ne mène start à end");
