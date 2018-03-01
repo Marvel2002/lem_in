@@ -141,7 +141,7 @@ int		path_to_end(t_room *end)
 	i = 0;
 	while (i < end->num_link)
 	{
-		if (end->link[i]->path)
+		if (end->path)
 			return (1);
 		i++;
 	}
