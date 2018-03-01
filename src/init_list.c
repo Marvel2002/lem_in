@@ -103,6 +103,19 @@ int		analyse_and_init_tube(char *line_buf, t_env *env)
 	return (0);
 }
 
+void	ft_free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	tab = NULL;
+}
+
 int		analyse_and_init_room(char *line_buf, t_env *env)
 {
 	char **tab;
@@ -110,15 +123,12 @@ int		analyse_and_init_room(char *line_buf, t_env *env)
 	tab = ft_strsplit(line_buf, ' ');
 	if (tab_len(tab) == 3 && tab_is_valid_three(tab, env))
 	{
-		//free_tab(tab);
 		fill_node_room(tab, env);
 		return (1);
 	}
 	if (analyse_and_init_tube(line_buf, env))
 		return (2);
-	//free_tab(tab);
-	
-	//free_tab(tab);
+	free_tab(tab);
 	return (0);
 }
 

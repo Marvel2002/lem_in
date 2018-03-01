@@ -13,11 +13,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "libft/libft.h"
+
+void	ft_free_tab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	tab = NULL;
+}
 
 int		main(void)
 {
-	static int nb = 1;
-	printf("%d\n", nb);
-	nb = 2;
-	printf("%d\n", nb);
+	char *tab = ft_strdup("lol");
+	free(tab);
+	//ft_free_tab(tab);
+	while (1);
+	return (1);
 }

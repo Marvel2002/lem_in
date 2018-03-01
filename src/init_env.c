@@ -4,7 +4,9 @@ t_env	*init_env(void)
 {
 	t_env *env;
 
-	env = (t_env *)ft_memalloc(sizeof(t_env));
-	env->isset = (t_isset *)ft_memalloc(sizeof(t_isset));
+	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
+		return (NULL);
+	if (!(env->isset = (t_isset *)ft_memalloc(sizeof(t_isset))))
+		return (NULL);
 	return (env);
 }

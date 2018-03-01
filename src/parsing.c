@@ -49,11 +49,6 @@ int		tab_is_valid_three(char **tab, t_env *env)
 	return (1);
 }
 
-/*void	init_ant(t_env *env, char *line_buf)
-{
-	env->ant_max = ft_atoi(line_buf);
-}*/
-
 int		parsing_loop(t_env *env)
 {
 	char *line_buf;
@@ -63,21 +58,24 @@ int		parsing_loop(t_env *env)
 	while (get_next_line(0, &line_buf) > 0)
 	{
 		if (line_buf[0] == '#')
-			;
-		else if (mode == 0 && str_is_digit(line_buf) && ft_atoi(line_buf) > 0)
+			create_node_list(env, line_buf);
+		else if (mode == ANT && str_is_digit(line_buf) && ft_atoi(line_buf) > 0)
 		{
-			//init_ant(env, line_buf);
+			create_node_list(env, line_buf);
 			env->ant_max = ft_atoi(line_buf);
 			restart_start_end(env);
 			mode++;
 		}
-		else if (mode == 1 && (mode = analyse_and_init_room(line_buf, env)))
-			;
-		else if (mode == 2)
-			analyse_and_init_tube(line_buf, env);
+		else if (mode == ROOM && (mode = analyse_and_init_room(line_buf, env)))
+			create_node_list(env, line_buf);
+		else if (mode == LINK && (mode = analyse_and_init_tube(line_buf, env)))
+			create_node_list(env, line_buf);
 		else
+		{
+			free(line_buf);
 			break ;
-		create_node_list(env, line_buf);
+		}
+		free(line_buf);
 	}
 	return (0);
 }

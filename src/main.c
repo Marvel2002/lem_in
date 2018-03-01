@@ -103,8 +103,16 @@ int		ant_in_next(t_room *end)
 
 void	move_ant(t_room *tmp, t_room *end)
 {
+	static int ant = 1;
 	tmp->ant++;
+	if (tmp->path == 1)
+	{
+		end->ant_name = ant;
+		ant++;
+	}
+	tmp->ant_name = end->ant_name;
 	end->ant--;
+	
 }
 
 void	display_solution(t_room *end, t_env *env)
@@ -123,6 +131,8 @@ void	display_solution(t_room *end, t_env *env)
 			move_ant(tmp, end);
 			if (tmp->ant && !tmp->start)
 			{
+				ft_putchar('L');
+				ft_putnbr_c(tmp->ant_name, '-');
 				ft_putstr(tmp->name);
 				ft_putchar(' ');
 			}
@@ -134,47 +144,38 @@ void	display_solution(t_room *end, t_env *env)
 		display_solution(end_final, env);
 }
 
-int		path_to_end(t_room *end)
+int		path_exists(t_env *env)
 {
-	int i;
+	t_room *start;
+	t_room *end;
 
-	i = 0;
-	while (i < end->num_link)
-	{
-		if (end->path)
-			return (1);
-		i++;
-	}
+	start = find_start(env);
+	start->ant = env->ant_max;
+	end = find_end(env);
+	set_path(start, 1);
+	if (end->path)
+		return (1);
 	return (0);
 }
 
 int		main(void)
 {
 	t_env *env;
+	t_room *end;
 
 	env = init_env();
-	t_room *start;
-	t_room *end;
-	parsing_loop(env);
-	if (all_is_set(env))
+	end = NULL;
+	if (env)
 	{
-		display_list(env);
-		start = find_start(env);
-		end = find_end(env);
-		set_path(start, 1);
-		if (path_to_end(end))
-		{
-			start->ant = env->ant_max;
-			ft_putchar('\n');
+		parsing_loop(env);
+		if (all_is_set(env) && path_exists(env))
+		{	
+			display_list(env);
+			end = find_end(env);
 			display_solution(end, env);
 		}
 		else
-			ft_putendl("Aucun chemin ne mène start à end");
-	}
-	else
-	{
-		//display_list(env);
-		write(2, "ERROR\n", 6);
+			write(2, "ERROR\n", 6);
 	}
 	return (0);
 }

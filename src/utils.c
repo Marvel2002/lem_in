@@ -35,6 +35,7 @@ void	display_list(t_env *env)
 		ft_putendl(tmp->line);
 		tmp = tmp->next;
 	}
+	ft_putchar('\n');
 }
 
 int		count_list(t_env *env)

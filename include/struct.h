@@ -3,6 +3,10 @@
 #include "libft.h"
 #define STRUCT_H
 
+#define ANT 0
+#define ROOM 1
+#define LINK 2
+
 typedef struct 	s_isset
 {
 	int		room_is_set;
@@ -15,6 +19,7 @@ typedef struct 	s_isset
 typedef	struct  s_room
 {
 	char *name;
+	int ant_name;
 	int x;
 	int y;
 	int ant;
