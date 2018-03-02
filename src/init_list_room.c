@@ -27,6 +27,7 @@ void	add_tube_to_list(t_room *node, t_room *to_add)
 			i++;
 		}
 		new_link[i] = to_add;
+		free(node->link);
 		node->link = new_link;
 		node->num_link++;
 	}

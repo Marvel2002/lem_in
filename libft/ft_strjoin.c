@@ -6,7 +6,7 @@
 /*   By: mmatime <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 17:36:20 by mmatime           #+#    #+#             */
-/*   Updated: 2017/12/27 13:54:35 by mmatime          ###   ########.fr       */
+/*   Updated: 2018/03/02 17:36:35 by mmatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while (s1[i])
 		str[a++] = s1[i++];
-	free((void*)s1);
 	while (s2[j])
 		str[a++] = s2[j++];
 	str[a] = '\0';

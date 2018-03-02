@@ -57,4 +57,5 @@ void	create_node_list(t_env *env, char *line_buf)
 	line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
 	if (line_list)
 		init_node(env, line_list, line_buf);
+	free(line_buf);
 }

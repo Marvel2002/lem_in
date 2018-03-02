@@ -63,7 +63,7 @@ int		tab_is_valid_three(char **tab, t_env *env)
 	return (1);
 }
 
-int		parsing_loop(t_env *env)
+void	parsing_loop(t_env *env)
 {
 	char		*line_buf;
 	static int	mode;
@@ -75,8 +75,8 @@ int		parsing_loop(t_env *env)
 			create_node_list(env, line_buf);
 		else if (mode == ANT && str_is_digit(line_buf) && ft_atoi(line_buf) > 0)
 		{
-			create_node_list(env, line_buf);
 			env->ant_max = ft_atoi(line_buf);
+			create_node_list(env, line_buf);
 			restart_start_end(env);
 			mode++;
 		}
@@ -85,8 +85,9 @@ int		parsing_loop(t_env *env)
 		else if (mode == LINK && (mode = analyse_and_init_tube(line_buf, env)))
 			create_node_list(env, line_buf);
 		else
+		{
+			free(line_buf);
 			break ;
-		free(line_buf);
+		}
 	}
-	return (0);
 }

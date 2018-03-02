@@ -31,19 +31,6 @@ void	free_isset(t_isset *isset)
 	free(isset);
 }
 
-void	free_link(struct s_room **link, int num_link)
-{
-	int i;
-
-	i = 0;
-	while (i < num_link)
-	{
-		free(link[i]);
-		i++;
-	}
-	free(link);
-}
-
 void	free_room(t_room *room)
 {
 	t_room *next;
@@ -52,7 +39,6 @@ void	free_room(t_room *room)
 	{
 		next = room->next;
 		free(room->name);
-		//free_link(room->link, room->num_link);
 		free(room->link);
 		free(room);
 		room = next;

@@ -38,7 +38,10 @@ int		analyse_and_init_room(char *line_buf, t_env *env)
 		return (1);
 	}
 	if (analyse_and_init_tube(line_buf, env))
+	{
+		ft_free_tab(tab);
 		return (2);
+	}
 	ft_free_tab(tab);
 	return (0);
 }
