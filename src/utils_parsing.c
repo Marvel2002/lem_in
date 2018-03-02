@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmatime <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/23 18:53:57 by mmatime           #+#    #+#             */
-/*   Updated: 2018/02/23 19:05:19 by mmatime          ###   ########.fr       */
+/*   Created: 2018/03/02 11:05:12 by mmatime           #+#    #+#             */
+/*   Updated: 2018/03/02 11:05:13 by mmatime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include "libft/libft.h"
+#include "struct.h"
 
-void	ft_free_tab(char **tab)
+int		tab_len(char **tab)
 {
 	int i;
 
 	i = 0;
 	while (tab[i])
-	{
-		free(tab[i]);
 		i++;
-	}
-	tab = NULL;
+	return (i);
 }
 
-int		main(void)
+int		str_is_digit(char *line)
 {
-	char *tab = ft_strdup("lol");
-	free(tab);
-	//ft_free_tab(tab);
-	while (1);
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] >= '0' && line[i] <= '9')
+			i++;
+		else
+			return (0);
+	}
 	return (1);
 }
