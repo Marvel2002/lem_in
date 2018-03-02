@@ -46,7 +46,6 @@ void	init_node_list(t_env *env, t_stdin *line_list, char *line_buf)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = line_list;
-
 	}
 	check_comment_start_end(env, line_list);
 }

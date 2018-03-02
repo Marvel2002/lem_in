@@ -36,6 +36,5 @@ void	fill_node_tube(char **tab, t_env *env)
 	else
 		add_tube_to_list(second, first);
 	if (!env->isset->tube_is_set)
-			env->isset->tube_is_set = 1;
+		env->isset->tube_is_set = 1;
 }
-

@@ -36,6 +36,7 @@ int		ant_in_next(t_room *end)
 void	move_ant(t_room *tmp, t_room *end)
 {
 	static int ant = 1;
+
 	tmp->ant++;
 	if (tmp->path == 1)
 	{
@@ -44,16 +45,24 @@ void	move_ant(t_room *tmp, t_room *end)
 	}
 	tmp->ant_name = end->ant_name;
 	end->ant--;
-	
+}
+
+void	display_l(t_room *tmp)
+{
+	ft_putchar('L');
+	ft_putnbr_c(tmp->ant_name, '-');
+	ft_putstr(tmp->name);
+	ft_putchar(' ');
 }
 
 void	display_solution(t_room *end, t_env *env)
 {
-	int min;
-	t_room *end_final = end;
-	t_room *tmp;
+	int		min;
+	t_room	*end_final;
+	t_room	*tmp;
 
 	min = min_path(end);
+	end_final = end;
 	while (!end->start)
 	{
 		tmp = end;
@@ -62,12 +71,7 @@ void	display_solution(t_room *end, t_env *env)
 		{
 			move_ant(tmp, end);
 			if (tmp->ant && !tmp->start)
-			{
-				ft_putchar('L');
-				ft_putnbr_c(tmp->ant_name, '-');
-				ft_putstr(tmp->name);
-				ft_putchar(' ');
-			}
+				display_l(tmp);
 		}
 		min--;
 	}

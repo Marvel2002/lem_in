@@ -14,8 +14,8 @@
 
 int		main(void)
 {
-	t_env *env;
-	t_room *end;
+	t_env	*env;
+	t_room	*end;
 
 	env = init_env();
 	end = NULL;
@@ -23,7 +23,7 @@ int		main(void)
 	{
 		parsing_loop(env);
 		if (all_is_set(env) && path_exists(env))
-		{	
+		{
 			display_list(env);
 			end = find_end(env);
 			display_solution(end, env);

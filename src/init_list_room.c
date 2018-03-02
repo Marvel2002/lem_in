@@ -14,8 +14,8 @@
 
 void	add_tube_to_list(t_room *node, t_room *to_add)
 {
-	int i;
-	t_room **new_link;
+	int		i;
+	t_room	**new_link;
 
 	i = 0;
 	new_link = (t_room **)ft_memalloc(sizeof(t_room *) * (node->num_link + 1));

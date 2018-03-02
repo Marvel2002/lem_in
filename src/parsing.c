@@ -12,16 +12,17 @@
 
 #include "struct.h"
 
-int 	tab_is_valid_two(char **tab, t_env *env)
+int		tab_is_valid_two(char **tab, t_env *env)
 {
-	int match_1;
-	int match_2;
-	t_room *tmp;
+	int		match_1;
+	int		match_2;
+	t_room	*tmp;
 
 	tmp = env->room;
 	match_1 = 0;
 	match_2 = 0;
-	if (ft_strcmp(tab[0], tab[1]) == 0 || !env->isset->start_is_set || !env->isset->end_is_set)
+	if (ft_strcmp(tab[0], tab[1]) == 0 || !env->isset->start_is_set ||
+		!env->isset->end_is_set)
 		return (0);
 	while (tmp)
 	{
@@ -43,7 +44,8 @@ int		no_match_list(char **tab, t_env *env)
 	tmp = env->room;
 	while (tmp)
 	{
-		if (ft_strcmp(tab[0], tmp->name) == 0 || (ft_atoi(tab[1]) == tmp->x && ft_atoi(tab[2]) == tmp->y))
+		if (ft_strcmp(tab[0], tmp->name) == 0 ||
+			(ft_atoi(tab[1]) == tmp->x && ft_atoi(tab[2]) == tmp->y))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -63,8 +65,8 @@ int		tab_is_valid_three(char **tab, t_env *env)
 
 int		parsing_loop(t_env *env)
 {
-	char *line_buf;
-	static int mode;
+	char		*line_buf;
+	static int	mode;
 
 	line_buf = NULL;
 	while (get_next_line(0, &line_buf) > 0)
@@ -83,11 +85,9 @@ int		parsing_loop(t_env *env)
 		else if (mode == LINK && (mode = analyse_and_init_tube(line_buf, env)))
 			create_node_list(env, line_buf);
 		else
-		{
-			free(line_buf);
 			break ;
-		}
 		free(line_buf);
 	}
+	free(line_buf);
 	return (0);
 }

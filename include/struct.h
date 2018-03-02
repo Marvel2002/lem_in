@@ -85,5 +85,6 @@ void	restart_start_end(t_env *env);
 void	check_comment_start_end(t_env *env, t_stdin *line_list);
 void	set_start_end(t_env *env, t_room *room);
 int		all_is_set(t_env *env);
+void	display_l(t_room *tmp);
 
 #endif

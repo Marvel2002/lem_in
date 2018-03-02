@@ -27,8 +27,8 @@ void	display_list(t_env *env)
 
 int		count_list(t_env *env)
 {
-	int i;
-	t_room *tmp;
+	int		i;
+	t_room	*tmp;
 
 	tmp = env->room;
 	i = 0;

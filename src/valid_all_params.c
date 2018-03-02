@@ -22,9 +22,9 @@ void	restart_start_end(t_env *env)
 
 void	check_comment_start_end(t_env *env, t_stdin *line_list)
 {
-	if (ft_strcmp(line_list->line, "##start") == 0 && env->isset->start_is_set == 0)
+	if (!ft_strcmp(line_list->line, "##start") && !env->isset->start_is_set)
 		env->next_room_is_start = 1;
-	else if (ft_strcmp(line_list->line, "##end") == 0 && env->isset->end_is_set == 0)
+	else if (!ft_strcmp(line_list->line, "##end") && !env->isset->end_is_set)
 		env->next_room_is_end = 1;
 }
 
@@ -45,7 +45,8 @@ void	set_start_end(t_env *env, t_room *room)
 
 int		all_is_set(t_env *env)
 {
-	if (env->isset->room_is_set && env->isset->tube_is_set && env->isset->end_is_set && env->isset->start_is_set)
+	if (env->isset->room_is_set && env->isset->tube_is_set &&
+		env->isset->end_is_set && env->isset->start_is_set)
 		return (1);
 	return (0);
 }
