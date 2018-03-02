@@ -32,5 +32,6 @@ int		main(void)
 			write(2, "ERROR\n", 6);
 	}
 	full_free(env);
+	//while (1);
 	return (0);
 }

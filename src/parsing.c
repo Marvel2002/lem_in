@@ -88,6 +88,5 @@ int		parsing_loop(t_env *env)
 			break ;
 		free(line_buf);
 	}
-	free(line_buf);
 	return (0);
 }

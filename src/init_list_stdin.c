@@ -32,7 +32,7 @@ t_room	*find_first_room(char **tab, t_env *env)
 	return (tmp);
 }
 
-void	init_node_list(t_env *env, t_stdin *line_list, char *line_buf)
+void	init_node(t_env *env, t_stdin *line_list, char *line_buf)
 {
 	t_stdin *tmp;
 
@@ -56,5 +56,5 @@ void	create_node_list(t_env *env, char *line_buf)
 
 	line_list = (t_stdin*)ft_memalloc(sizeof(t_stdin));
 	if (line_list)
-		init_node_list(env, line_list, line_buf);
+		init_node(env, line_list, line_buf);
 }
